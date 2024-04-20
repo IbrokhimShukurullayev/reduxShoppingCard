@@ -1,0 +1,19 @@
+#banner {
+  background-image: url(../../assets/images/banner.png);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+}
+
+.banner {
+  &__title {
+    max-width: 573px;
+    color: rgb(255, 255, 255);
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 150%;
+    letter-spacing: 0.5px;
+    text-align: left;
+    padding: 258px 0 186px 0;
+  }
+}
