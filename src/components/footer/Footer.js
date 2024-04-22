@@ -2,6 +2,7 @@ import React from 'react'
 import "./footer.scss"
 
 import logo from "../../assets/images/logo.png"
+import brands from "../../assets/images/Brands.png"
 
 function Footer() {
   return (
@@ -51,6 +52,10 @@ function Footer() {
               <li><p>Privacy Policy</p></li>
               <li><p>Terms & Conditions</p></li>
             </ul>
+          </div>
+          <div className="footers">
+            <h2>© 2018 Ecommerce theme by www.bisenbaev.com</h2>
+            <img src={brands} alt="" />
           </div>
         </div>
       </div>
