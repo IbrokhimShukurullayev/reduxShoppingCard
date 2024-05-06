@@ -4,20 +4,35 @@ import "./card.scss"
 import axios from "axios"
 import Skeleton from '../skeleton/Skeleton'
 import Loading from '../loading/Loading'
-import { FaRegHeart } from "react-icons/fa";
+import { FaRegHeart , FaHeart } from "react-icons/fa";
+import { IoCartOutline } from "react-icons/io5";
+import { FaShoppingCart } from "react-icons/fa";
 
 
 import rate from "../../assets/images/rate.png"
+import { Link } from 'react-router-dom'
+
+
+
+import { useDispatch , useSelector } from 'react-redux'
+import { toogleWishes } from '../../context/wishestSlice'
+import { addCard } from '../../context/karzinkaSlice'
+
 
 
 const API_URL = "https://fakestoreapi.com/products/"
 
 function Card() {
+    const dispatch = useDispatch()
     const [data , setData] = useState([])
     const [count , setCount] = useState(8)
     const [categories , SetCategories] = useState([])
     const [categoryValue , setCategoryValue] = useState("")
     const [loading, setLoading] = useState(false)
+
+    const wishes = useSelector(state => state.wishlist.value)
+        const karzinka = useSelector(state => state.karzinka.value)
+
 
 useEffect(()=> {
         axios
@@ -44,11 +59,22 @@ useEffect(()=> {
     let products = data?.map(el=> (
         <div key={el.id} className="card">
             <div className="card__img">
-                <img src={el.image} alt="" />
+                <Link to={`/single/${el.id}`}>
+                  <img src={el.image} alt="" />
+                </Link>
             </div>
-            <button className='card__like'><svg class="imagess" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" viewBox="0 0 16 16">
-            <path d="M4 1c2.21 0 4 1.755 4 3.92C8 2.755 9.79 1 12 1s4 1.755 4 3.92c0 3.263-3.234 4.414-7.608 9.608a.513.513 0 0 1-.784 0C3.234 9.334 0 8.183 0 4.92 0 2.755 1.79 1 4 1"/>
-          </svg></button>
+            <button onClick={() => dispatch(toogleWishes(el))} className='card__like'>
+                {
+                    wishes.some(w => w.id === el.id) ? <FaHeart/> :
+                <FaRegHeart/> 
+                }
+            </button>
+            <button onClick={() => dispatch(addCard(el))} className='card__cart'>
+                {
+                    karzinka.some(w => w.id === el.id) ? < FaShoppingCart /> :
+                <IoCartOutline/> 
+                }
+            </button>
             <div className="card__body">
                 <h2 className="card__title">
                     {el.title}
@@ -95,74 +121,3 @@ useEffect(()=> {
 
 export default Card
 
-{/* <div id="row">
-        <div className="container">
-            <h2 className='row__title'>BEST SELLER</h2>
-            <div className="row">
-                <div className="card">
-                    <div className="card__img">
-                        <img src={card} alt="" />
-                    </div>
-                    <div className="card__body">
-                        <h2 className="card__title">
-                            Nike Air Max 270 React
-                        </h2>
-                        <img src={rate} alt="" />
-                        <div className="card__prices">
-                            <h3>$299,43</h3>
-                            <p>$534,33</p>
-                            <h4>24% Off</h4>
-                        </div>
-                    </div>
-                </div>
-                <div className="card">
-                    <div className="card__img">
-                        <img src={card} alt="" />
-                    </div>
-                    <div className="card__body">
-                        <h2 className="card__title">
-                            Nike Air Max 270 React
-                        </h2>
-                        <img src={rate} alt="" />
-                        <div className="card__prices">
-                            <h3>$299,43</h3>
-                            <p>$534,33</p>
-                            <h4>24% Off</h4>
-                        </div>
-                    </div>
-                </div>
-                <div className="card">
-                    <div className="card__img">
-                        <img src={card} alt="" />
-                    </div>
-                    <div className="card__body">
-                        <h2 className="card__title">
-                            Nike Air Max 270 React
-                        </h2>
-                        <img src={rate} alt="" />
-                        <div className="card__prices">
-                            <h3>$299,43</h3>
-                            <p>$534,33</p>
-                            <h4>24% Off</h4>
-                        </div>
-                    </div>
-                </div>
-                <div className="card">
-                    <div className="card__img">
-                        <img src={card} alt="" />
-                    </div>
-                    <div className="card__body">
-                        <h2 className="card__title">
-                            Nike Air Max 270 React
-                        </h2>
-                        <img src={rate} alt="" />
-                        <div className="card__prices">
-                            <h3>$299,43</h3>
-                            <p>$534,33</p>
-                            <h4>24% Off</h4>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> */}

@@ -23,6 +23,7 @@
   align-items: center;
   padding: 10px 0;
   position: relative;
+
   &__img {
     img {
       max-width: 290px;
@@ -91,12 +92,17 @@
     border-radius: 4px;
     margin: 30px auto;
   }
+  &__cart {
+    position: absolute;
+    top: 40px;
+    right: 10px;
+    color: rgb(51, 160, 255);
+    font-size: 25px;
+  }
   &__like {
     position: absolute;
     right: 10px;
-    fill: #fff;
-    color: #fff;
-    stroke: rgb(51, 160, 255);
+    color: rgb(51, 160, 255);
     font-size: 22px;
   }
 }

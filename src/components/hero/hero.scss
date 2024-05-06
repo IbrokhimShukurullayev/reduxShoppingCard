@@ -5,9 +5,10 @@
 .hero {
   display: flex;
   align-items: start;
-  justify-content: space-between;
+  // justify-content: space-between;
+  position: relative;
   &__left {
-    padding: 150px 0;
+    padding: 120px 0;
   }
   &__title {
     color: rgb(255, 255, 255);
@@ -35,5 +36,12 @@
     letter-spacing: 0%;
     text-align: left;
     text-decoration-line: underline;
+  }
+  &__right {
+    img {
+      position: absolute;
+      // width: 100%;
+      top: -100px;
+    }
   }
 }
