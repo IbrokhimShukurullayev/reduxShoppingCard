@@ -15,9 +15,27 @@ const API_URL = "https://fakestoreapi.com/products/"
 
 
 const Karzinka = () => {
+const [modal , setModal] =useState(false)
+      const toggleModal = () => {
+        setModal(!modal)
+      }
+
+      const [totalPrice, setTotalPrice] = useState(0);
+
+    // ...
+    const karzinka = useSelector(state => state.karzinka.value)
+
+    useEffect(() => {
+        // Karzinkadagi har bir mahsulotning umumiy narxini hisoblash
+        let price = 0;
+        karzinka.forEach(product => {
+            price += product.price * product.quantity;
+        });
+        setTotalPrice(price);
+    }, [karzinka]);
+
     const dispatch = useDispatch()
     const [data , setData] = useState([])
-    const karzinka = useSelector(state => state.karzinka.value)
     console.log(karzinka);
 
     const handlsubmit =(el) => {
@@ -74,8 +92,61 @@ const Karzinka = () => {
                     <button>Return To Shop</button>
                     <button>Update Cart</button>
                 </div>
+                <div className="karzinka__price">
+                    <div className="karzinka__price__promocod">
+                        <input type="text" placeholder='Voucher code' />
+                        <button>Redeem</button>
+                    </div>
+                    <div className="karzinka__price__all">
+                        <ul>
+                            <li><h2>Subtotal</h2> <p>$998</p></li>
+                            <li><h2>Shipping fee</h2> <p>$20</p></li>
+                            <li><h2>Coupon</h2> <p>No</p></li>
+                        </ul>
+                        <div>
+                            <h2>TOTAL</h2>
+                            <p><p>{totalPrice.toFixed(1)}</p></p>
+                        </div>
+                        <button onClick={toggleModal}>Check out</button>
+                    </div>
+                </div>
             </div>
         </div>
+        {modal && (
+        <div className="modal">
+          <div onClick={toggleModal} className="overlay"></div>
+          <div className="modal-content">
+            <form className="create__user-form" action="">
+              <input
+                type="text"
+                placeholder="name"
+              />
+              <input
+                type="text"
+                placeholder="profession"
+              />
+              <input
+                type="number"
+                placeholder="age"
+              />
+              <select
+              name="" 
+              id=""
+              >
+                <option value="">gender</option>
+                <option value="male">male</option>
+                <option value="female">female</option>
+              </select>
+              <div className="modal__buttons">
+                <button className="madal__button__1" type="submit">Save</button>
+                <button className="close-modal" onClick={toggleModal}>
+                  CLOSE
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </>
   )
 }

@@ -56,14 +56,14 @@ useEffect(()=> {
         </div>
     ))
   return (
-    <>
+    <div className='wishes'>
     <h2>Wishes</h2>
      <div className='row container'>
     {
         wishes.length ? products : <Empty/>
     }
     </div>
-    </>
+    </div>
   )
 }
 

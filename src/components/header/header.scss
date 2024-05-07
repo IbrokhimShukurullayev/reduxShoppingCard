@@ -1,11 +1,16 @@
 .header__top {
   height: 70px;
   border-bottom: 1px solid rgb(250, 250, 251);
-  // position: fixed;
-  // top: 0;
-  // width: 100%;
-  // z-index: 100;
-  // background-color: #fff;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  background-color: #fff;
+  transition: 0.3s;
+}
+
+.navbar-shirnk {
+  margin-top: -70px;
 }
 
 .nav__top {
@@ -66,13 +71,19 @@
   }
 }
 
-header {
+.header {
   height: 90px;
   width: 100%;
   z-index: 99;
-  // position: fixed;
-  // top: 70px;
-  // background-color: #fff;
+  position: fixed;
+  top: 70px;
+  background-color: #fff;
+  transition: 0.5;
+}
+
+.navbar-shirnk {
+  height: 70px;
+  box-shadow: 2px 4px 8px 0px rgba(0, 0, 0, 0.1);
 }
 
 .nav {

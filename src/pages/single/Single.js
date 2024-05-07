@@ -1,4 +1,5 @@
 import React , {useState , useEffect} from 'react'
+import { useSelector , useDispatch } from 'react-redux'
 import axios from "axios"
 import "./single.scss"
 import star from "../../assets/images/star.png"
@@ -6,18 +7,24 @@ import food  from "../../assets/images/category-1.svg.png"
 
 import { IoIosStar } from "react-icons/io";
 import {useParams} from "react-router-dom"
-import { FaHeart } from "react-icons/fa";
 import { LuEye } from "react-icons/lu";
+
+import { FaRegHeart , FaHeart } from "react-icons/fa";
+import { toogleWishes } from '../../context/wishestSlice'
+import { addCard } from '../../context/karzinkaSlice'
+
 
 
 const API_URL = "https://fakestoreapi.com/products/"
 
 function Single() {
-  const {id} = useParams()
-
-  const [data , setData] = useState([])
-  const [loading, setLoading] = useState(false)
-      let [count , setCuont] = useState(1)
+    const dispatch = useDispatch()
+    const {id} = useParams()
+    const wishes = useSelector(state => state.wishlist.value)
+    const karzinka = useSelector(state => state.karzinka.value)
+    const [data , setData] = useState([])
+    const [loading, setLoading] = useState(false)
+    let [count , setCuont] = useState(1)
 
   window.scrollTo(0,0)
 
@@ -61,24 +68,11 @@ function Single() {
                                 <p>({findProduct?.rating.rate} reviews)</p>
                             </div>
                             <div className="single__home__right__price">
-                                {/* <div>
-                                    <h2>
-                                        ${findProduct?.price.toFixed(1) * count}
-                                    </h2>
-                                </div> */}
                                 <div className="card__prices">
                                     <h6>${(findProduct?.price * count).toFixed(1)}</h6>
                                     <p>$534,33</p>
                                     <h4>24% Off</h4>
                                 </div>
-                                {/* <div>
-                                    <h3>
-                                        26% Off
-                                    </h3> 
-                                    <p>
-                                        $52
-                                    </p>
-                                </div> */}
                             </div>
                             <p className="single__home__right__list">
                                 {findProduct?.description}
@@ -98,11 +92,14 @@ function Single() {
                                         <button disabled={count === 1} onClick={() => setCuont(count-1)}>-</button>
                                     </div>
                                 </div>
-                                <button className="single__inform__right__buttons__btn">
+                                <button onClick={() => dispatch(addCard(findProduct))} className="single__inform__right__buttons__btn">
                                     Add To Cart
                                 </button>
-                                <button className="single__inform__right__buttons__like__btn">
-                                    <FaHeart /> 
+                                <button onClick={() => dispatch(toogleWishes(findProduct))}  className="single__inform__right__buttons__like__btn">
+                                    {
+                                        wishes.some(w => w.id === findProduct?.id) ? <FaHeart/> :
+                                    <FaRegHeart/> 
+                                    }
                                 </button>
                                 <button className="single__inform__right__buttons__like__btn">
                                     <LuEye />

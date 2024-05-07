@@ -1,4 +1,5 @@
-import React  from 'react'
+import React , {useState}  from 'react'
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import "./header.scss"
 
@@ -11,11 +12,30 @@ import { BsCart3 } from "react-icons/bs";
 import { Link } from 'react-router-dom';
 
 function Header() {
+
+const [isShirnk, setIsShirnk] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setIsShirnk(true);
+      } else {
+        setIsShirnk(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
     const wishes = useSelector(state => state.wishlist.value)
     const karzinka = useSelector(state => state.karzinka.value)
   return (
     <>
-      <div className="header__top">
+      <div className={isShirnk ? 'header__top navbar-shirnk' : 'header__top'}>
         <div className="nav__top container">
           <div className='nav__top__language'>
             <div>
@@ -26,10 +46,10 @@ function Header() {
             </div>
           </div>
           <div className="nav__top__right">
-            <div className="person">
+            <Link to={`/admin`} className="person">
               <IoPersonOutline/>
               <p>My profile</p>
-            </div>
+            </Link>
             <Link to={`/favourite`} className="like">
               <FaRegHeart/>
               <p>Wishlist</p>
@@ -47,7 +67,7 @@ function Header() {
           </div>
         </div>
       </div>
-      <header className="header">
+      <header className={isShirnk ? 'header navbar-shirnk' : 'header'}>
         <div className="nav container">
           <div className="nav__logo">
             <Link to={`/`}>
@@ -55,11 +75,11 @@ function Header() {
             </Link>
           </div>
           <ul className="nav__list">
-            <li className="nav__item"><a href="#" className="nav__link active">HOME</a></li>
-            <li className="nav__item"><a href="#" className="nav__link">BAGS</a></li>
-            <li className="nav__item"><a href="#" className="nav__link">SNEAKERS</a></li>
-            <li className="nav__item"><a href="#" className="nav__link links">BELT </a></li>
-            <li className="nav__item"><a href="#" className="nav__link links">CONTACT </a></li>
+            <li className="nav__item"><Link to={`*`} className="nav__link active">HOME</Link></li>
+            <li className="nav__item"><Link to={`*`} className="nav__link">BAGS</Link></li>
+            <li className="nav__item"><Link to={`*`} className="nav__link">SNEAKERS</Link></li>
+            <li className="nav__item"><Link to={`*`} className="nav__link links">BELT </Link></li>
+            <li className="nav__item"><Link to={`/cantact`} className="nav__link links">CONTACT </Link></li>
           </ul>
         </div>
       </header>
