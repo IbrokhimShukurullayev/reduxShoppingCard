@@ -11,11 +11,13 @@ import Auth from './Auth/Auth';
 import Admin from './pages/admin/Admin';
 import Cantact from "./pages/cantact/Cantact";
 import NotFound from "./components/notFound/NotFound";
+import ResHeader from "./components/resHeader/ResHeader";
 
 function App() {
   return (
     <div className="App">
         <Header/>
+        <ResHeader/>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/single/:id" element={<Single />} />
